@@ -1,12 +1,16 @@
 // ****** SELECT ITEMS **********
 
 const alert = document.querySelector('.alert');
-const form = document.querySelector('.grocery-form');
-const grocery = document.getElementById('grocery');
+const form = document.querySelector('.todo-form');
+const todo = document.getElementById('todo');
 const submitBtn = document.querySelector('.submit-btn');
-const container = document.querySelector('.grocery-container');
-const list = document.querySelector('.grocery-list');
+const container = document.querySelector('.todo-container');
+const list = document.querySelector('.todo-list');
 const clearBtn = document.querySelector('.clear-btn');
+
+
+const date=document.getElementById('due');
+
 
 // edit option
 let editElement;
@@ -16,22 +20,25 @@ let editID = "";
 // ****** EVENT LISTENERS **********
 
 // submit form 
-form.addEventListener('submit', addItem);
-//clear items
+form.addEventListener('submit', addTodo);
+
 clearBtn.addEventListener('click', clearItems);
-//load items
-
-
 
 // ****** FUNCTIONS **********
 
-function addItem(e){
+function addTodo(e){
     e.preventDefault();
-    const value = grocery.value;
+
+    const todoDate = due.value;
+
+
+    const todoVal = todo.value;
+
     const id = new Date().getTime().toString();
 
-    if(value && !editFlag){
-        createListItem(id, value);
+  
+    if(todoVal&&todoDate && !editFlag){
+        createListItem(id, todoVal,todoDate);
         
 
         //display alert
@@ -41,17 +48,17 @@ function addItem(e){
         container.classList.add("show-container");
 
         //add to local storage 
-        addToLocalStorage(id,value);
+        addToLocalStorage(id,todoVal, todoDate);
 
         //set back to default
         setBackToDefault();
     }
-    else if(value && editFlag){
-        editElement.innerHTML=value;
-        displayAlert("value changed", ' success');
+    else if(todoVal && editFlag){
+        editElement.innerHTML=todoVal;
+        displayAlert("value changed", 'success');
         //edit local storage 
 
-        editLocalStorage(editID, value);
+        editLocalStorage(editID, todoVal, todoDate);
         setBackToDefault();
     }
     else{
@@ -62,6 +69,7 @@ function addItem(e){
 //display alert
 
 function displayAlert(text,action){
+    
     alert.textContent=text;
     alert.classList.add(`alert-${action}`);
 
@@ -70,12 +78,12 @@ function displayAlert(text,action){
     setTimeout(function(){
         alert.textContent="";
         alert.classList.remove(`alert-${action}`);
-    }, 1000 );
+    }, 3000 );
 }
 
 //clear items 
 function clearItems(){
-    const items = document.querySelectorAll('.grocery-item');
+    const items = document.querySelectorAll('.todo-item');
 
     if(items.length > 0 ){
         items.forEach(function(item){
@@ -113,7 +121,7 @@ function editItem(e){
     editElement=e.currentTarget.parentElement.previousElementSibling;
 
     //set form value 
-    grocery.value = editElement.innerHTML;
+    todo.value = editElement.innerHTML;
     editFlag=true;
     editID=element.dataset.id;
     submitBtn.textContent = "edit";
@@ -122,7 +130,7 @@ function editItem(e){
 
 //set back to default 
 function setBackToDefault(){
-    grocery.value = "";
+    todo.value = "";
     editFlag= false;
     editID = "";
     submitBtn.textContent = "submit";
@@ -130,11 +138,11 @@ function setBackToDefault(){
 
 
 // ****** LOCAL STORAGE **********
-function addToLocalStorage(id, value){
-    const grocery = {id, value};
+function addToLocalStorage(id, todoVal, todoDate){
+    const todo = {id, todoVal, todoDate};
     let items = getLocalStorage();
 
-    items.push(grocery);
+    items.push(todo);
     localStorage.setItem('list',JSON.stringify(items));
     
     // console.log('added to local storage');
@@ -152,14 +160,15 @@ function removeFromLocalStorage(id){
         }
     });
     
-    localStorage.setItem("list", JSON.stringify(items));
+    localStorage.setItem("list", JSON.stringify(items)); 
 
 
-function editLocalStorage(id,value){
+  
+function editLocalStorage(id,todoVal){
     let items=getLocalStorage ();
-    items = items.map(function(item){
+    items = items.map(function(item){ 
         if(item.id==id){
-            item.value = value;
+            item.value = todoVal;
         }
         return item;
     });
@@ -176,6 +185,7 @@ function editLocalStorage(id,value){
 // const oranges = JSON.parse(localStorage.getItem('orange'));
 // console.log(oranges);
 // localStorage.removeItem('orange')
+
 // // ****** SETUP ITEMS **********
 
 window.addEventListener('DOMContentLoaded', setupItems);
@@ -191,24 +201,27 @@ function setupItems(){
     }
 }
 }
-function createListItem(id,value){
+function createListItem(id,todoVal, todoDate){
     const element = document.createElement('article');
 
     // add class
-    element.classList.add('grocery-item'); 
+    element.classList.add('todo-item'); 
 
     // add id
     const attr = document.createAttribute('data-id');
     attr.value = id;
     element.setAttributeNode(attr);
-    element.innerHTML = ` <p class="title">${value}</p> <div class = "btn-container"> <button type = "button" class = "edit-btn"> <i class="fas fa-edit"></i> </button> <button type="button" class="delete-btn"> <i class="fas fa-trash"> </div>`;
+
+    element.innerHTML = `<input type = "checkbox" class="completed" placeholder ="check when completed"/><p class="title">${todoVal}</p> <p class="title">${todoDate}</p> <div class = "btn-container"> <button type = "button" class = "edit-btn"> <i class="fas fa-edit"></i> </button> <button type="button" class="delete-btn"> <i class="fas fa-trash">  </div>`;
+   
     const deleteBtn = element.querySelector('.delete-btn');
     const editBtn = element.querySelector('.edit-btn');
     deleteBtn.addEventListener('click', deleteItem);
     editBtn.addEventListener('click', editItem);
+
     // append child 
 
     list.appendChild(element);
+   
 
     }
-   

@@ -210,7 +210,7 @@ Grocery List
   color: #155724;
   background: #d4edda;
 }
-.grocery-form h3 {
+.todo-form h3 {
   color: var(--clr-primary-1);
   margin-bottom: 1.5rem;
   text-align: center;
@@ -219,7 +219,7 @@ Grocery List
   display: flex;
   justify-content: center;
 }
-#grocery {
+#todo {
   padding: 0.25rem;
   padding-left: 1rem;
   background: var(--clr-grey-10);
@@ -230,7 +230,7 @@ Grocery List
   flex: 1 0 auto;
   color: var(--clr-grey-5);
 }
-#grocery::placeholder {
+#todo::placeholder {
   font-family: var(--ff-secondary);
   color: var(--clr-grey-5);
 }
@@ -255,7 +255,7 @@ Grocery List
   color: var(--clr-white);
 }
 
-.grocery-container {
+.todo-container {
   margin-top: 2rem;
   transition: var(--transition);
   visibility: hidden;
@@ -263,7 +263,7 @@ Grocery List
 .show-container {
   visibility: visible;
 }
-.grocery-item {
+.todo-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -273,11 +273,11 @@ Grocery List
   border-radius: var(--radius);
   text-transform: capitalize;
 }
-.grocery-item:hover {
+.todo-item:hover {
   color: var(--clr-grey-5);
   background: var(--clr-grey-10);
 }
-.grocery-item:hover .title {
+.todo-item:hover .title {
   color: var(--clr-grey-5);
 }
 .title {
