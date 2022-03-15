@@ -126,6 +126,9 @@ function editItem(e){
     editID=element.dataset.id;
     submitBtn.textContent = "edit";
     
+    // here you should be able to read the date on the dom 121 gets the name, need a line for getting date, and value of complete
+    //also here checbox should appear with checked if completed is true.
+    
 }
 
 //set back to default 
@@ -213,7 +216,7 @@ function createListItem(id,todoVal, todoDate){
     element.setAttributeNode(attr);
 
     element.innerHTML = `<input type = "checkbox" class="completed" placeholder ="check when completed"/><p class="title">${todoVal}</p> <p class="title">${todoDate}</p> <div class = "btn-container"> <button type = "button" class = "edit-btn"> <i class="fas fa-edit"></i> </button> <button type="button" class="delete-btn"> <i class="fas fa-trash">  </div>`;
-   
+   // this checkbox should   probably be disabled <input disabled type='checkbox'. but go enabled when edit.
     const deleteBtn = element.querySelector('.delete-btn');
     const editBtn = element.querySelector('.edit-btn');
     deleteBtn.addEventListener('click', deleteItem);
