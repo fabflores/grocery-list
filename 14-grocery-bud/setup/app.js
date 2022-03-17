@@ -22,53 +22,36 @@ let editID = "";
 let isComplete;
 
 // ****** EVENT LISTENERS **********
-
-// submit form 
+// when these event listener buttons are clicked (submit, clear, checkbox)
+// the corresponding functions will be called 
 form.addEventListener('submit', addTodo);
-
 clearBtn.addEventListener('click', clearItems);
-
 checkBoxEl.addEventListener('change', completedOrNot)
 
 // ****** FUNCTIONS **********
 function completedOrNot(e){
-    debugger
     isComplete = e.target.checked;
-
-
 }
 
-
-
-
+// addTodo function creates new list item
 function addTodo(e){
     e.preventDefault();
-
-
-
     const todoDate = due.value;
-
-
     const todoVal = todo.value;
-
     // const todoCheck= checkBox.checked;
-
     const id = new Date().getTime().toString();
 
-  
+// if todoValue and todoDate are not blank, create the list item 
+
     if(todoVal&&todoDate && !editFlag ){
         createListItem(id, todoVal,todoDate, isComplete);
         
-
         //display alert
         displayAlert('item added to the list', "success" );
-
         //show container 
         container.classList.add("show-container");
-
         //add to local storage 
         addToLocalStorage(id,todoVal, todoDate, isComplete);
-
         //set back to default
         setBackToDefault();
     }
@@ -77,11 +60,9 @@ function addTodo(e){
         editDateElement.innerHTML=todoDate;
         editCheckElement.checked=isComplete;
 
-
         displayAlert("value changed", 'success');
         //edit local storage 
         addToLocalStorage(id,todoVal, todoDate, isComplete);
-
         setBackToDefault();
     }
     else{
@@ -91,36 +72,32 @@ function addTodo(e){
 
 //display alert
 
+// displayAlert displays the alerts when needed, and removes them after 3 seconds
 function displayAlert(text,action){
-    
     alert.textContent=text;
     alert.classList.add(`alert-${action}`);
-
     //remove alert
-
     setTimeout(function(){
         alert.textContent="";
         alert.classList.remove(`alert-${action}`);
     }, 3000 );
 }
 
-//clear items 
+//clear items clears all the to do items
 function clearItems(){
     const items = document.querySelectorAll('.todo-item');
-
     if(items.length > 0 ){
         items.forEach(function(item){
             list.removeChild(item);
         });
     }
-
     container.classList.remove("show-container");
     displayAlert("empty list", "danger");
     setBackToDefault();
    localStorage.removeItem('list');
 }
 
-//delete item
+//delete item deletes a single item from to do list
 function deleteItem(e){
     const element = e.currentTarget.parentElement.parentElement;
     const id = element.dataset.id;
@@ -136,6 +113,7 @@ function deleteItem(e){
 
 }
 
+//when edit button is clicked, you will be able to change item name, date, and checkbox
 //  edit function
 function editItem(e){
     const element = e.currentTarget.parentElement.parentElement;
@@ -152,11 +130,9 @@ function editItem(e){
     editFlag=true;
     editID=element.dataset.id;
     submitBtn.textContent = "edit";
-
-    
 }
 
-//set back to default 
+//set back to default
 function setBackToDefault(){
     todo.value = "";
     date.value="";
@@ -169,22 +145,16 @@ function setBackToDefault(){
 
 
 // ****** LOCAL STORAGE **********
-
-
-
 function addToLocalStorage(id, todoVal, todoDate, todoCheck){
     const todo = {id, todoVal, todoDate, todoCheck};
     let items = getLocalStorage();
-
     items.push(todo);
     localStorage.setItem('list',JSON.stringify(items));
-    
     // console.log('added to local storage');
 }
 function getLocalStorage() {
     return localStorage.getItem("list") ? JSON.parse(localStorage.getItem("list")) : [];
 }
-
 function removeFromLocalStorage(id){
     let items = getLocalStorage();
 
@@ -193,11 +163,7 @@ function removeFromLocalStorage(id){
             return item;
         }
     });
-    
     localStorage.setItem("list", JSON.stringify(items)); 
-
-
-  
     editLocalStorage(editID, todoVal, todoDate);
 
 function editLocalStorage(id,todoVal){
@@ -211,17 +177,6 @@ function editLocalStorage(id,todoVal){
     localStorage.setItem("list", JSON.stringify(items));
 
 }
-//localStorage API
-// setItem
-//getItem
-//removeItem
-//save as strings 
-// localStorage.setItem('orange', JSON.stringify(["item", "item2"]
-// ));
-// const oranges = JSON.parse(localStorage.getItem('orange'));
-// console.log(oranges);
-// localStorage.removeItem('orange')
-
 // // ****** SETUP ITEMS **********
 
 window.addEventListener('DOMContentLoaded', setupItems);
@@ -230,10 +185,8 @@ function setupItems(){
     if(items.length > 0 ){
         items.forEach(function(item){
             createListItem(item.id,item.value);
-
         });
         container.classList.add('show-container');
-
     }
 }
 }
