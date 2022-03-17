@@ -11,11 +11,15 @@ const clearBtn = document.querySelector('.clear-btn');
 
 const date=document.getElementById('due');
 
+const checkBoxEl=document.getElementById('completed')
+
+
 
 // edit option
 let editElement;
 let editFlag = false;
 let editID = "";
+let isComplete;
 
 // ****** EVENT LISTENERS **********
 
@@ -24,21 +28,36 @@ form.addEventListener('submit', addTodo);
 
 clearBtn.addEventListener('click', clearItems);
 
+checkBoxEl.addEventListener('change', completedOrNot)
+
 // ****** FUNCTIONS **********
+function completedOrNot(e){
+    debugger
+    isComplete = e.target.checked;
+
+
+}
+
+
+
 
 function addTodo(e){
     e.preventDefault();
+
+
 
     const todoDate = due.value;
 
 
     const todoVal = todo.value;
 
+    // const todoCheck= checkBox.checked;
+
     const id = new Date().getTime().toString();
 
   
-    if(todoVal&&todoDate && !editFlag){
-        createListItem(id, todoVal,todoDate);
+    if(todoVal&&todoDate && !editFlag ){
+        createListItem(id, todoVal,todoDate, isComplete);
         
 
         //display alert
@@ -48,17 +67,21 @@ function addTodo(e){
         container.classList.add("show-container");
 
         //add to local storage 
-        addToLocalStorage(id,todoVal, todoDate);
+        addToLocalStorage(id,todoVal, todoDate, isComplete);
 
         //set back to default
         setBackToDefault();
     }
-    else if(todoVal && editFlag){
+    else if(todoVal && todoDate && editFlag){
         editElement.innerHTML=todoVal;
+        editDateElement.innerHTML=todoDate;
+        editCheckElement.checked=isComplete;
+
+
         displayAlert("value changed", 'success');
         //edit local storage 
+        addToLocalStorage(id,todoVal, todoDate, isComplete);
 
-        editLocalStorage(editID, todoVal, todoDate);
         setBackToDefault();
     }
     else{
@@ -116,21 +139,29 @@ function deleteItem(e){
 //  edit function
 function editItem(e){
     const element = e.currentTarget.parentElement.parentElement;
-
     // set edit item
-    editElement=e.currentTarget.parentElement.previousElementSibling;
-
+    editElement=e.currentTarget.parentElement.previousElementSibling.previousElementSibling;
+    editDateElement=e.currentTarget.parentElement.previousElementSibling;
+    editCheckElement=e.currentTarget.parentElement.previousElementSibling.previousElementSibling;
+    
     //set form value 
-    todo.value = editElement.innerHTML;
+    todo.value= editElement.innerHTML;
+    date.value=editDateElement.innerHTML;
+    checkBoxEl.value=editCheckElement.innerHTML;
+
     editFlag=true;
     editID=element.dataset.id;
     submitBtn.textContent = "edit";
+
     
 }
 
 //set back to default 
 function setBackToDefault(){
     todo.value = "";
+    date.value="";
+    checkBoxEl.checked=false;
+
     editFlag= false;
     editID = "";
     submitBtn.textContent = "submit";
@@ -138,8 +169,11 @@ function setBackToDefault(){
 
 
 // ****** LOCAL STORAGE **********
-function addToLocalStorage(id, todoVal, todoDate){
-    const todo = {id, todoVal, todoDate};
+
+
+
+function addToLocalStorage(id, todoVal, todoDate, todoCheck){
+    const todo = {id, todoVal, todoDate, todoCheck};
     let items = getLocalStorage();
 
     items.push(todo);
@@ -164,6 +198,8 @@ function removeFromLocalStorage(id){
 
 
   
+    editLocalStorage(editID, todoVal, todoDate);
+
 function editLocalStorage(id,todoVal){
     let items=getLocalStorage ();
     items = items.map(function(item){ 
@@ -201,7 +237,7 @@ function setupItems(){
     }
 }
 }
-function createListItem(id,todoVal, todoDate){
+function createListItem(id,todoVal, todoDate,todoCheck){
     const element = document.createElement('article');
 
     // add class
@@ -212,7 +248,7 @@ function createListItem(id,todoVal, todoDate){
     attr.value = id;
     element.setAttributeNode(attr);
 
-    element.innerHTML = `<input type = "checkbox" class="completed" placeholder ="check when completed"/><p class="title">${todoVal}</p> <p class="title">${todoDate}</p> <div class = "btn-container"> <button type = "button" class = "edit-btn"> <i class="fas fa-edit"></i> </button> <button type="button" class="delete-btn"> <i class="fas fa-trash">  </div>`;
+    element.innerHTML = `<input disabled type = "checkbox" id="completed"/> <p class="title">${todoVal}</p> <p class="title">${todoDate}</p> <div class = "btn-container"> <button type = "button" class = "edit-btn"> <i class="fas fa-edit"></i> </button> <button type="button" class="delete-btn"> <i class="fas fa-trash">  </div>`;
    
     const deleteBtn = element.querySelector('.delete-btn');
     const editBtn = element.querySelector('.edit-btn');
