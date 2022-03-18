@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Grocery Bud</title>
+    <title>To Do List</title>
     <!-- font-awesome -->
     <link
       rel="stylesheet"
@@ -15,37 +15,51 @@
   <body>
     <section class="section-center">
       <!--form-->
-      <form class="grocery-form">
+
+      <form class="project-form">
         <p class = "alert"></p>
-        <h3>grocery bud</h3>
+        <h3>project list</h3>
         <div class="form-control">
-          <input type ="text" id="grocery" placeholder="e.g. eggs"/>
+          <input type="text" id="project" placeholder="add a project"/>
+          <input type ="name" id="contributor" placeholder="enter your name"/>
+          <input type = "date" id ="projectDue"/>
+          <button type = "submit" class="submit-btn">submit</button>
+
+        </div>
+      </form>
+
+      <form class="todo-form">
+        <p class = "alert"></p>
+        <h3>to do list</h3>
+        <div class="form-control">
+          <input type ="text" id="todo" placeholder="add a to do item"/>
+          <input type = "date" id ="due"/>
+          <input type = "checkbox" id="completed" onclick="completeOrNot"/>
+          <select name="projects" id="project-select">
+            <option value = "">- please select a project - </option>
+            <option value="project 1">project 1</option>
+            <option value="project 2">project 2</option>
+            <option value="project 3">project 3</option>
+          </select>
+          
+          
           <button type = "submit" class="submit-btn">submit</button>
         </div>
       </form>
       <!--list-->
-      <div class="grocery-list">
-       <!-- <article class="grocery-item">
-          <p class ="title">item</p>
-        <div class="btn-container">
-          <button type="button" class="edit-btn">
-            <i class="fas fa-edit"></i>
-          </button>
-          <button type="button" class="delete-btn">
-            <i class="fas fa-trash"></i>
-          </button>
-        </div>
-        </article>  -->
+      <div class="todo-list">
+  
       </div>
-      <div class="grocery-container">
-        <button> ty</button>
+      <div class="todo-container">
+        
         <!--button-->
         <button type = "button" class="clear-btn">clear items</button>
-        
+        <!-- <input type = "checkbox" class="completed" placeholder ="check when completed"/> -->
 
       </div>
     </section>
     <!-- javascript -->
-    <script src="app.js"></script>
+    <script src="project.js"></script>
+    <script src="todo.js"></script>
   </body>
 </html>
