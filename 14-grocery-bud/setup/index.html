@@ -19,14 +19,21 @@
       <form class="project-form">
         <p class = "alert"></p>
         <h3>project list</h3>
-        <div class="form-control">
+        <div class="form-projControl">
           <input type="text" id="project" placeholder="add a project"/>
           <input type ="name" id="contributor" placeholder="enter your name"/>
           <input type = "date" id ="projectDue"/>
-          <button type = "submit" class="submit-btn">submit</button>
+          <button type = "submit" class="submit-button">submit</button>
 
         </div>
       </form>
+      <div class="project-list">
+      </div>
+      <div class="project-container">
+     
+
+
+
 
       <form class="todo-form">
         <p class = "alert"></p>
@@ -34,7 +41,7 @@
         <div class="form-control">
           <input type ="text" id="todo" placeholder="add a to do item"/>
           <input type = "date" id ="due"/>
-          <input type = "checkbox" id="completed" onclick="completeOrNot"/>
+          <input type = "checkbox" id="completed" onclick="completedOrNot"/>
           <select name="projects" id="project-select">
             <option value = "">- please select a project - </option>
             <option value="project 1">project 1</option>

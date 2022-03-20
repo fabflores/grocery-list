@@ -234,7 +234,7 @@ Grocery List
   font-family: var(--ff-secondary);
   color: var(--clr-grey-5);
 }
-.submit-btn {
+.submit-btn, .submit-button{
   background: var(--clr-primary-8);
   border-color: transparent;
   flex: 0 0 5rem;
