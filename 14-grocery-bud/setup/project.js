@@ -18,7 +18,7 @@ let editProjID = "";
 
 
 projForm.addEventListener('submit', addProject);
-debugger
+
 function addProject(e){
     e.preventDefault();
     const dueVal = projectDue.value;
@@ -37,7 +37,7 @@ function addProject(e){
         
         addToLocalStorage(projId, nameVal, dueVal, projectVal);
      
-        setBackToDefault();
+        setBackToProjDefault();
     }
 
     else if(dueVal && nameVal && projectVal && editProjFlag){
@@ -48,7 +48,7 @@ function addProject(e){
         displayprojAlert("value changed", 'success');
        
         addToLocalStorage(projId, dueVal, nameVal, projectVal);
-        setBackToDefault();
+        setBackToProjDefault();
     }
     else{
         displayprojAlert('please enter value', 'danger');
@@ -66,7 +66,7 @@ function displayprojAlert(text,action){
 }
 
 
-function deleteItem(e){
+function deleteProjItem(e){
     const element = e.currentTarget.parentElement.parentElement;
     const projId = element.dataset.projId;
     projList.removeChild(element);
@@ -81,7 +81,7 @@ function deleteItem(e){
 
 }
 
-function editItem(e){
+function editProjItem(e){
     const element = e.currentTarget.parentElement.parentElement;
     // set edit item
     editProjElement=e.currentTarget.parentElement.parentElement
@@ -98,7 +98,7 @@ function editItem(e){
 
 
 //set back to defaul
-function setBackToDefault(){
+function setBackToProjDefault(){
     projectDue.value = "";
     contributor.value="";
     project.value="";
@@ -112,15 +112,15 @@ function setBackToDefault(){
 debugger
 
 // ****** LOCAL STORAGE **********
-function addToLocalStorage(projId, dueVal, projectVal, nameVal){
+function addProjToLocalStorage(projId, dueVal, projectVal, nameVal){
     const project = {projId, dueVal, projectVal, nameVal};
     let items = getLocalStorage();
     items.push(project);
-    localStorage.setItem('list',JSON.stringify(items));
+    localStorage.setItem('project',JSON.stringify(items));
    
 }
-function getLocalStorage() {
-    return localStorage.getItem("list") ? JSON.parse(localStorage.getItem("list")) : [];
+function getProjLocalStorage() {
+    return localStorage.getItem("project") ? JSON.parse(localStorage.getItem("project")) : [];
 }
 function removeFromLocalStorage(projId){
     let items = getLocalStorage();
@@ -130,18 +130,18 @@ function removeFromLocalStorage(projId){
             return item;
         }
     });
-    localStorage.setItem("list", JSON.stringify(items)); 
-    editLocalStorage(editProjID, dueVal, nameVal,projectVal);
+    localStorage.setItem("project", JSON.stringify(items)); 
+    editProjLocalStorage(editProjID, dueVal, nameVal,projectVal);
 
-function editLocalStorage(projId,projectVal){
-    let items=getLocalStorage ();
+function editProjLocalStorage(projId,projectVal){
+    let items=getProjLocalStorage ();
     items = items.map(function(item){ 
         if(item.projId==projId){
             item.value = projectVal;
         }
         return item;
     });
-    localStorage.setItem("list", JSON.stringify(items));
+    localStorage.setItem("project", JSON.stringify(items));
 
 }
 // // ****** SETUP ITEMS **********
@@ -151,7 +151,7 @@ function setupProjItems(){
     let items = getLocalStorage();
     if(items.length > 0 ){
         items.forEach(function(item){
-            createListItem(item.projId,item.value);
+            createListProjItem(item.projId,item.value);
         });
         projContainer.classList.add('show-projContainer');
     }
@@ -171,12 +171,12 @@ function createProjListItem(projId,dueVal, nameVal, projectVal){
    
     const deleteBtn = element.querySelector('.delete-btn');
     const editBtn = element.querySelector('.edit-btn');
-    deleteBtn.addEventListener('click', deleteItem);
-    editBtn.addEventListener('click', editItem);
+    deleteBtn.addEventListener('click', deleteProjItem);
+    editBtn.addEventListener('click', editProjItem);
 
     // append child 
 
-    list.appendChild(element);
+    project.appendChild(element);
    
 
     }
