@@ -17,6 +17,7 @@ let editProjFlag = false;
 let editProjID = "";
 
 
+
 projForm.addEventListener('submit', addProject);
 
 function addProject(e){
@@ -54,7 +55,7 @@ function addProject(e){
         displayprojAlert('please enter value', 'danger');
     }
 } 
-debugger
+
 function displayprojAlert(text,action){
     alert.textContent=text;
     alert.classList.add(`alert-${action}`);
@@ -109,7 +110,7 @@ function setBackToProjDefault(){
 }
 
 
-debugger
+
 
 // ****** LOCAL STORAGE **********
 function addProjToLocalStorage(projId, dueVal, projectVal, nameVal){
@@ -145,9 +146,11 @@ function editProjLocalStorage(projId,projectVal){
 
 }
 // // ****** SETUP ITEMS **********
-debugger
-window.addEventListener('DOMContentLoaded', setupProjItems);
+
+// window.addEventListener('DOMContentLoaded', setupProjItems);
+
 function setupProjItems(){
+    
     let items = getLocalStorage();
     if(items.length > 0 ){
         items.forEach(function(item){
@@ -156,8 +159,9 @@ function setupProjItems(){
         projContainer.classList.add('show-projContainer');
     }
 }
+
 }
-debugger
+
 function createProjListItem(projId,dueVal, nameVal, projectVal){
     const element = document.createElement('article');
 

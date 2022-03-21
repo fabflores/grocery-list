@@ -179,7 +179,7 @@ function editLocalStorage(id,todoVal){
 }
 // // ****** SETUP ITEMS **********
 
-window.addEventListener('DOMContentLoaded', setupItems);
+// window.addEventListener('DOMContentLoaded', setupItems);
 function setupItems(){
     let items = getLocalStorage();
     if(items.length > 0 ){
@@ -213,4 +213,4 @@ function createListItem(id,todoVal, todoDate,todoCheck){
     list.appendChild(element);
    
 
-    }
+}
