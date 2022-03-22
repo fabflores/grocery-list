@@ -1,4 +1,6 @@
-const projAlert = document.querySelector(".alert");
+import * as Common from './common.js';
+
+// const projAlert = document.querySelector(".alert");
 const projForm = document.querySelector(".project-form");
 const projList = document.querySelector(".project-list");
 const projContainer = document.querySelector(".project-container");
@@ -25,11 +27,11 @@ function addProject(e) {
   if (dueVal && nameVal && projectVal && !editProjFlag) {
     createListItem(projId, nameVal, dueVal, projectVal);
 
-    displayprojAlert("project added to the list", "success");
+    // displayAlert("project added to the list", "success");
 
     projContainer.classList.add("show-projContainer");
 
-    addToLocalStorage(projId, nameVal, dueVal, projectVal);
+    Common.addToLocalStorage(projId, nameVal, dueVal, projectVal);
 
     setBackToProjDefault();
   } else if (dueVal && nameVal && projectVal && editProjFlag) {
@@ -37,24 +39,24 @@ function addProject(e) {
     editDateElement.innerHTML = dueVal;
     editCheckElement.innerHTML = nameVal;
 
-    displayprojAlert("value changed", "success");
+    cdisplayAlert("value changed", "success");
 
-    addToLocalStorage(projId, dueVal, nameVal, projectVal);
+    Common.addToLocalStorage(projId, dueVal, nameVal, projectVal);
     setBackToProjDefault();
   } else {
-    displayprojAlert("please enter value", "danger");
+    Common.displayAlert("please enter value", "danger");
   }
 }
 
-function displayprojAlert(text, action) {
-  alert.textContent = text;
-  alert.classList.add(`alert-${action}`);
-  //remove alert
-  setTimeout(function () {
-    alert.textContent = "";
-    alert.classList.remove(`alert-${action}`);
-  }, 3000);
-}
+// function displayAlert(text, action) {
+//   alert.textContent = text;
+//   alert.classList.add(`alert-${action}`);
+//   //remove alert
+//   setTimeout(function () {
+//     alert.textContent = "";
+//     alert.classList.remove(`alert-${action}`);
+//   }, 3000);
+// }
 
 function deleteProjItem(e) {
   const element = e.currentTarget.parentElement.parentElement;
@@ -63,7 +65,7 @@ function deleteProjItem(e) {
   if (projList.children.length === 0) {
     projContainer.classList.remove("show-projContainer");
   }
-  displayAlert("item removed", "danger");
+  Common.displayAlert("item removed", "danger");
   setBackToDefault();
 
   removeFromLocalStorage(projId);
@@ -97,17 +99,17 @@ function setBackToProjDefault() {
 // ****** LOCAL STORAGE **********
 function addProjToLocalStorage(projId, dueVal, projectVal, nameVal) {
   const project = { projId, dueVal, projectVal, nameVal };
-  let items = getLocalStorage();
+  let items = Common.getLocalStorage("project");
   items.push(project);
   localStorage.setItem("project", JSON.stringify(items));
 }
-function getProjLocalStorage() {
-  return localStorage.getItem("project")
-    ? JSON.parse(localStorage.getItem("project"))
-    : [];
-}
+// function getProjLocalStorage() {
+//   return localStorage.getItem("project")
+//     ? JSON.parse(localStorage.getItem("project"))
+//     : [];
+// }
 function removeFromLocalStorage(projId) {
-  let items = getLocalStorage();
+  let items = Common.getLocalStorage("project");
 
   items = items.filter(function (item) {
     if (item.projId !== projId) {
@@ -118,7 +120,7 @@ function removeFromLocalStorage(projId) {
   editProjLocalStorage(editProjID, dueVal, nameVal, projectVal);
 }
 function editProjLocalStorage(projId, projectVal) {
-  let items = getProjLocalStorage();
+  let items = Common.getProjLocalStorage("project");
   items = items.map(function (item) {
     if (item.projId == projId) {
       item.value = projectVal;
@@ -132,16 +134,16 @@ function editProjLocalStorage(projId, projectVal) {
 // window.addEventListener('DOMContentLoaded', setupProjItems);
 
 function setupProjItems() {
-  let items = getLocalStorage();
+  let items = Common.getLocalStorage("project");
   if (items.length > 0) {
     items.forEach(function (item) {
-      createListProjItem(item.projId, item.value);
+      createListItem(item.projId, item.value);
     });
     projContainer.classList.add("show-projContainer");
   }
 }
 
-function createProjListItem(projId, dueVal, nameVal, projectVal) {
+function createListItem(projId, dueVal, nameVal, projectVal) {
   const element = document.createElement("article");
 
   element.classList.add("project-item");
