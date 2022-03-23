@@ -1,4 +1,4 @@
-import * as Common from './common.js';
+import * as Common from "./common.js";
 
 // const projAlert = document.querySelector(".alert");
 const projForm = document.querySelector(".project-form");
@@ -18,6 +18,7 @@ projForm.addEventListener("submit", addProject);
 
 function addProject(e) {
   e.preventDefault();
+  debugger;
   const dueVal = projectDue.value;
   const nameVal = contributor.value;
   const projectVal = project.value;
@@ -29,7 +30,7 @@ function addProject(e) {
 
     // displayAlert("project added to the list", "success");
 
-    projContainer.classList.add("show-projContainer");
+    projContainer.classList.add("show-container");
 
     Common.addToLocalStorage(projId, nameVal, dueVal, projectVal);
 
@@ -63,7 +64,7 @@ function deleteProjItem(e) {
   const projId = element.dataset.projId;
   projList.removeChild(element);
   if (projList.children.length === 0) {
-    projContainer.classList.remove("show-projContainer");
+    projContainer.classList.remove("show-container");
   }
   Common.displayAlert("item removed", "danger");
   setBackToDefault();
@@ -139,14 +140,14 @@ function setupProjItems() {
     items.forEach(function (item) {
       createListItem(item.projId, item.value);
     });
-    projContainer.classList.add("show-projContainer");
+    projContainer.classList.add("show-container");
   }
 }
 
 function createListItem(projId, dueVal, nameVal, projectVal) {
   const element = document.createElement("article");
 
-  element.classList.add("project-item");
+  element.classList.add("todo-item");
 
   const attr = document.createAttribute("data-projId");
   attr.value = projId;
@@ -161,7 +162,7 @@ function createListItem(projId, dueVal, nameVal, projectVal) {
 
   // append child
 
-  project.appendChild(element);
+  projList.appendChild(element);
 }
 
 export { setupProjItems };
