@@ -4,13 +4,13 @@ function getLocalStorage(storageKey) {
       : [];
   }
 
-  function addToLocalStorage(id, todoVal, todoDate, todoCheck) {
-    const todo = { id, todoVal, todoDate, todoCheck };
-    let items = getLocalStorage();
-    items.push(todo);
-    localStorage.setItem("list", JSON.stringify(items));
-    // console.log('added to local storage');
-  }
+//   function addToLocalStorage(id, todoVal, todoDate, todoCheck) {
+//     const todo = { id, todoVal, todoDate, todoCheck };
+//     let items = getLocalStorage();
+//     items.push(todo);
+//     localStorage.setItem("list", JSON.stringify(items));
+//     // console.log('added to local storage');
+//   }
   
   function removeFromLocalStorage(id) {
     let items = getLocalStorage();
@@ -21,7 +21,7 @@ function getLocalStorage(storageKey) {
       }
     });
     localStorage.setItem("list", JSON.stringify(items));
-    editLocalStorage(editID, todoVal, todoDate);
+    // editLocalStorage(editID, todoVal, todoDate);
   }
   function editLocalStorage(id, todoVal) {
     let items = getLocalStorage();
@@ -44,4 +44,4 @@ function getLocalStorage(storageKey) {
     }, 3000);
   }
 
-  export {getLocalStorage, addToLocalStorage,removeFromLocalStorage, displayAlert}
+  export {getLocalStorage, editLocalStorage, removeFromLocalStorage, displayAlert}

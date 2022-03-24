@@ -51,7 +51,7 @@ function addTodo(e) {
     //show container
     container.classList.add("show-container");
     //add to local storage
-    Common.addToLocalStorage(id, todoVal, todoDate, isComplete);
+    addToLocalStorage(id, todoVal, todoDate, isComplete);
     //set back to default
     setBackToDefault();
   } else if (todoVal && todoDate && editFlag) {
@@ -61,7 +61,7 @@ function addTodo(e) {
 
     Common.displayAlert("value changed", "success");
     //edit local storage
-    Common.addToLocalStorage(id, todoVal, todoDate, isComplete);
+    addToLocalStorage(id, todoVal, todoDate, isComplete);
     setBackToDefault();
   } else {
     Common.displayAlert("please enter value", "danger");
@@ -103,7 +103,7 @@ function deleteItem(e) {
   if (list.children.length === 0) {
     container.classList.remove("show-container");
   }
-  displayAlert("item removed", "danger");
+  Common.displayAlert("item removed", "danger");
   setBackToDefault();
 
   // remove from local storage
@@ -143,7 +143,13 @@ function setBackToDefault() {
 }
 
 // ****** LOCAL STORAGE **********
-
+function addToLocalStorage(id, todoVal, todoDate, todoCheck) {
+  const todo = { id, todoVal, todoDate, todoCheck };
+  let items = Common.getLocalStorage("list");
+  items.push(todo);
+  localStorage.setItem("list", JSON.stringify(items));
+  // console.log('added to local storage');
+}
 // // ****** SETUP ITEMS **********
 
 // window.addEventListener('DOMContentLoaded', setupItems);

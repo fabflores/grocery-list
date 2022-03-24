@@ -18,7 +18,7 @@ projForm.addEventListener("submit", addProject);
 
 function addProject(e) {
   e.preventDefault();
-  debugger;
+
   const dueVal = projectDue.value;
   const nameVal = contributor.value;
   const projectVal = project.value;
@@ -32,7 +32,7 @@ function addProject(e) {
 
     projContainer.classList.add("show-container");
 
-    Common.addToLocalStorage(projId, nameVal, dueVal, projectVal);
+    addToLocalStorage(projId, nameVal, dueVal, projectVal);
 
     setBackToProjDefault();
   } else if (dueVal && nameVal && projectVal && editProjFlag) {
@@ -42,7 +42,7 @@ function addProject(e) {
 
     cdisplayAlert("value changed", "success");
 
-    Common.addToLocalStorage(projId, dueVal, nameVal, projectVal);
+    addToLocalStorage(projId, dueVal, nameVal, projectVal);
     setBackToProjDefault();
   } else {
     Common.displayAlert("please enter value", "danger");
@@ -60,6 +60,7 @@ function addProject(e) {
 // }
 
 function deleteProjItem(e) {
+
   const element = e.currentTarget.parentElement.parentElement;
   const projId = element.dataset.projId;
   projList.removeChild(element);
@@ -67,12 +68,13 @@ function deleteProjItem(e) {
     projContainer.classList.remove("show-container");
   }
   Common.displayAlert("item removed", "danger");
-  setBackToDefault();
+  setBackToProjDefault();
 
-  removeFromLocalStorage(projId);
+  Common.removeFromLocalStorage(projId);
 }
 
 function editProjItem(e) {
+ 
   const element = e.currentTarget.parentElement.parentElement;
   // set edit item
   editProjElement = e.currentTarget.parentElement.parentElement;
@@ -98,38 +100,42 @@ function setBackToProjDefault() {
 }
 
 // ****** LOCAL STORAGE **********
-function addProjToLocalStorage(projId, dueVal, projectVal, nameVal) {
+function addToLocalStorage(projId, dueVal, projectVal, nameVal) {
+  
   const project = { projId, dueVal, projectVal, nameVal };
   let items = Common.getLocalStorage("project");
   items.push(project);
   localStorage.setItem("project", JSON.stringify(items));
 }
+
 // function getProjLocalStorage() {
 //   return localStorage.getItem("project")
 //     ? JSON.parse(localStorage.getItem("project"))
 //     : [];
 // }
-function removeFromLocalStorage(projId) {
-  let items = Common.getLocalStorage("project");
+// function removeFromLocalStorage(projId) {
+//   
 
-  items = items.filter(function (item) {
-    if (item.projId !== projId) {
-      return item;
-    }
-  });
-  localStorage.setItem("project", JSON.stringify(items));
-  editProjLocalStorage(editProjID, dueVal, nameVal, projectVal);
-}
-function editProjLocalStorage(projId, projectVal) {
-  let items = Common.getProjLocalStorage("project");
-  items = items.map(function (item) {
-    if (item.projId == projId) {
-      item.value = projectVal;
-    }
-    return item;
-  });
-  localStorage.setItem("project", JSON.stringify(items));
-}
+//   let items = Common.getLocalStorage("project");
+
+//   items = items.filter(function (item) {
+//     if (item.projId !== projId) {
+//       return item;
+//     }
+//   });
+//   localStorage.setItem("project", JSON.stringify(items));
+//   editProjLocalStorage(editProjID, dueVal, nameVal, projectVal);
+// }
+// function editProjLocalStorage(projId, projectVal) {
+//   let items = Common.getProjLocalStorage("project");
+//   items = items.map(function (item) {
+//     if (item.projId == projId) {
+//       item.value = projectVal;
+//     }
+//     return item;
+//   });
+//   localStorage.setItem("project", JSON.stringify(items));
+// }
 // // ****** SETUP ITEMS **********
 
 // window.addEventListener('DOMContentLoaded', setupProjItems);
