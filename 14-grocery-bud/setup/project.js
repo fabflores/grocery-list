@@ -18,8 +18,13 @@ let editProjID = "";
 projForm.addEventListener("submit", addProject);
 clearBtn.addEventListener("click", clearProjects);
 function isNameTaken(name) {
+  for (let i = i; i<items.length;i++){
+    return true
+  }
+
+
   ///loop project and compare name
-  // use for (let i=i;i<items.lenght;i++) to loo
+  // use for (let i=i;i<items.lenght;i++) to loop
   // not for each
   //return true if taken , false otherses
 }
@@ -36,6 +41,11 @@ function addProject(e) {
   // dont let name if reusue
   // if (isNameTaken (name)) {
   // .  show alert 'name take and return from function
+  if (isNameTaken()){
+    Common.displayAlert("Name is taken", "danger");
+  }
+
+
   if (dueVal && nameVal && projectVal && !editProjFlag) {
     createListItem(projId, nameVal, dueVal, projectVal);
 
@@ -165,7 +175,7 @@ function setupProjItems() {
   let items = Common.getLocalStorage("project");
   if (items.length > 0) {
     items.forEach(function (item) {
-      createListItem(item.projId, item.value);
+      createListItem(item.projId, item.nameVal, item.dueVal, item.projectVal);
       // PAF: why is undefined when first start.
       // look how the paramenters of the function and what is passed
     });
