@@ -17,10 +17,21 @@ let editProjID = "";
 
 projForm.addEventListener("submit", addProject);
 clearBtn.addEventListener("click", clearProjects);
+
 function isNameTaken(name) {
-  for (let i = i; i<items.length;i++){
-    return true
-  }
+  // try {
+    const items = Common.getProjects();
+    for (let i = 0; i<items.length;i++){
+      if (name.toLowerCase() === items[i].projectVal.toLowerCase()) {
+        return true;
+
+      }
+    }
+    return false;
+  // }
+  // catch (error) {
+  //   console.error('oops',error)
+  // }
 
 
   ///loop project and compare name
@@ -41,8 +52,9 @@ function addProject(e) {
   // dont let name if reusue
   // if (isNameTaken (name)) {
   // .  show alert 'name take and return from function
-  if (isNameTaken()){
+  if (isNameTaken(projectVal)){
     Common.displayAlert("Name is taken", "danger");
+  
   }
 
 
@@ -53,7 +65,8 @@ function addProject(e) {
 
     projContainer.classList.add("show-container");
 
-    addToLocalStorage(projId, nameVal, dueVal, projectVal);
+    //projId, dueVal, projectVal, nameVal) 
+    addToLocalStorage(projId,dueVal,projectVal, nameVal);
 
     setBackToProjDefault();
   } else if (dueVal && nameVal && projectVal && editProjFlag) {
@@ -64,7 +77,7 @@ function addProject(e) {
 
     cdisplayAlert("value changed", "success");
 
-    addToLocalStorage(projId, dueVal, nameVal, projectVal);
+    addToLocalStorage(projId, dueVal,projectVal, nameVal );
     setBackToProjDefault();
   } else {
     Common.displayAlert("please enter value", "danger");
@@ -171,8 +184,9 @@ function addToLocalStorage(projId, dueVal, projectVal, nameVal) {
 // window.addEventListener('DOMContentLoaded', setupProjItems);
 
 function setupProjItems() {
+ 
+  let items = Common.getProjects();
   debugger;
-  let items = Common.getLocalStorage("project");
   if (items.length > 0) {
     items.forEach(function (item) {
       createListItem(item.projId, item.nameVal, item.dueVal, item.projectVal);

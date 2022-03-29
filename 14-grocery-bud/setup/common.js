@@ -34,6 +34,7 @@ function getLocalStorage(storageKey) {
     localStorage.setItem("list", JSON.stringify(items));
   }
   const alert = document.querySelector(".alert");
+
   function displayAlert(text, action) {
     alert.textContent = text;
     alert.classList.add(`alert-${action}`);
@@ -43,19 +44,13 @@ function getLocalStorage(storageKey) {
       alert.classList.remove(`alert-${action}`);
     }, 3000);
   }
-//   clearBtn.addEventListener("click", Common.clearItems);
-//   const clearBtn = document.querySelector(".clear-btn");
-//   function clearItems() {
-//     const items = document.querySelectorAll(".todo-item");
-//     if (items.length > 0) {
-//       items.forEach(function (item) {
-//         list.removeChild(item);
-//       });
-//     }
-//     container.classList.remove("show-container");
-//     Common.displayAlert("empty list", "danger");
-//     setBackToDefault();
-//     localStorage.removeItem("list");
-//   }
 
-  export {getLocalStorage, editLocalStorage, removeFromLocalStorage, displayAlert}
+
+function getProjects() {
+  let items = getLocalStorage("project");
+
+  return items;
+ 
+  }
+
+  export {getProjects, getLocalStorage, editLocalStorage, removeFromLocalStorage, displayAlert}

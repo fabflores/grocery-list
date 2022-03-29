@@ -29,19 +29,7 @@ clearBtn.addEventListener("click", clearItems);
 checkBoxEl.addEventListener("change", completedOrNot);
 
 // ****** FUNCTIONS **********
-function getProjects() {
-  let items = Common.getLocalStorage("project");
-  //pAF: first we need to get items from local storage
-  // then loop to create
-  if (items.length > 0) {
-    items.forEach(function (item) {
-      debugger;
-      var option = document.createElement("option");
-      option.value = item.projId;
-      option.text = item.nameVal;
-      selectEl.appendChild(option);
-    });
-  }
+
 
   // const element = document.createElement("article");
   // element.classList.add("project-item");
@@ -181,6 +169,17 @@ function addToLocalStorage(id, todoVal, todoDate, todoCheck) {
 }
 // // ****** SETUP ITEMS **********
 
+function buildSelect() {
+  const items = Common.getProjects();
+
+  if (items.length > 0) {
+    items.forEach(function (item) {
+      var option = document.createElement("option");
+      option.value = item.projId;
+      option.text = item.nameVal;
+      selectEl.appendChild(option);
+    });
+}
 // window.addEventListener('DOMContentLoaded', setupItems);
 function setupItems() {
   let items = Common.getLocalStorage("list");
@@ -190,7 +189,7 @@ function setupItems() {
     });
     container.classList.add("show-container");
   }
-  getProjects();
+  buildSelect();
 }
 
 function createListItem(id, todoVal, todoDate, todoCheck) {
