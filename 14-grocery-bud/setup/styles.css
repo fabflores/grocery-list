@@ -137,7 +137,7 @@ p {
 }
 /*  global classes */
 
-.btn {
+.btn , .button{
   text-transform: uppercase;
   background: transparent;
   color: var(--clr-black);
@@ -151,7 +151,7 @@ p {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   border-radius: var(--radius);
 }
-.btn:hover {
+.btn, .button:hover {
   color: var(--clr-white);
   background: var(--clr-black);
 }
@@ -210,12 +210,12 @@ Grocery List
   color: #155724;
   background: #d4edda;
 }
-.grocery-form h3 {
+.project-form h3, .todo-form h3 {
   color: var(--clr-primary-1);
   margin-bottom: 1.5rem;
   text-align: center;
 }
-.form-control {
+.form-control, .form-projControl  {
   display: flex;
   justify-content: center;
 }
@@ -255,7 +255,7 @@ Grocery List
   color: var(--clr-white);
 }
 
-.grocery-container {
+.todo-container, .project-container {
   margin-top: 2rem;
   transition: var(--transition);
   visibility: hidden;
@@ -263,7 +263,7 @@ Grocery List
 .show-container {
   visibility: visible;
 }
-.grocery-item {
+.todo-item, .project-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -273,7 +273,7 @@ Grocery List
   border-radius: var(--radius);
   text-transform: capitalize;
 }
-.grocery-item:hover {
+.todo-item:hover, .project-item:hover {
   color: var(--clr-grey-5);
   background: var(--clr-grey-10);
 }
@@ -307,7 +307,7 @@ Grocery List
 .delete-btn:hover {
   color: var(--clr-red-dark);
 }
-.clear-btn {
+.clear-btn, .clear-button {
   text-transform: capitalize;
   width: 10rem;
   height: 1.5rem;

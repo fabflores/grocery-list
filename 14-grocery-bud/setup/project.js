@@ -9,12 +9,14 @@ const submitButton = document.querySelector(".submit-button");
 const project = document.getElementById("project");
 const name = document.getElementById("contributor");
 const projDate = document.getElementById("projectDue");
+const clearBtn = document.querySelector(".clear-button");
 
 let editProjElement;
 let editProjFlag = false;
 let editProjID = "";
 
 projForm.addEventListener("submit", addProject);
+clearBtn.addEventListener("click", clearProjects);
 
 function addProject(e) {
   e.preventDefault();
@@ -48,7 +50,18 @@ function addProject(e) {
     Common.displayAlert("please enter value", "danger");
   }
 }
-
+function clearProjects() {
+  const items = document.querySelectorAll(".project-item");
+  if (items.length > 0) {
+    items.forEach(function (project) {
+      projList.removeChild(project);
+    });
+  }
+  projContainer.classList.remove("show-container");
+  Common.displayAlert("empty list", "danger");
+  setBackToProjDefault();
+  localStorage.removeItem("project");
+}
 // function displayAlert(text, action) {
 //   alert.textContent = text;
 //   alert.classList.add(`alert-${action}`);
@@ -90,8 +103,8 @@ function editProjItem(e) {
 
 //set back to defaul
 function setBackToProjDefault() {
-  projectDue.value = "";
-  contributor.value = "";
+  projDate.value = "";
+  name.value = "";
   project.value = "";
 
   editProjFlag = false;
@@ -153,7 +166,7 @@ function setupProjItems() {
 function createListItem(projId, dueVal, nameVal, projectVal) {
   const element = document.createElement("article");
 
-  element.classList.add("todo-item");
+  element.classList.add("project-item");
 
   const attr = document.createAttribute("data-projId");
   attr.value = projId;

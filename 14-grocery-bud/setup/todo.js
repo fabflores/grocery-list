@@ -29,6 +29,24 @@ clearBtn.addEventListener("click", clearItems);
 checkBoxEl.addEventListener("change", completedOrNot);
 
 // ****** FUNCTIONS **********
+function getProjects()
+{
+  const element = document.createElement("article");
+  element.classList.add("project-item");
+  const attr = document.createAttribute("data-projId");
+  attr.value = projId;
+  element.setAttributeNode(attr);
+  // element.innerHTML = `<p class="title">${projectVal}</p><p class="title">${nameVal}</p><p class="title">${dueVal}</p> <div class = "btn-container"> <button type = "button" class = "edit-btn"> <i class="fas fa-edit"></i> </button> <button type="button" class="delete-btn"> <i class="fas fa-trash">  </div>`;
+//   const deleteBtn = element.querySelector(".delete-btn");
+//   const editBtn = element.querySelector(".edit-btn");
+//   deleteBtn.addEventListener("click", deleteProjItem);
+//   editBtn.addEventListener("click", editProjItem);
+//   // append child
+//   projList.appendChild(element);
+}
+
+
+
 function completedOrNot(e) {
   isComplete = e.target.checked;
 }
@@ -83,10 +101,11 @@ function addTodo(e) {
 
 //clear items clears all the to do items
 function clearItems() {
+  debugger
   const items = document.querySelectorAll(".todo-item");
   if (items.length > 0) {
-    items.forEach(function (item) {
-      list.removeChild(item);
+    items.forEach(function (list) {
+      list.removeChild(list);
     });
   }
   container.classList.remove("show-container");
