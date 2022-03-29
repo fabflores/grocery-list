@@ -1,3 +1,5 @@
+ const selectEl = document.getElementById("project-select");
+
 function getLocalStorage(storageKey) {
     return localStorage.getItem(storageKey)
       ? JSON.parse(localStorage.getItem(storageKey))
@@ -53,4 +55,6 @@ function getProjects() {
  
   }
 
-  export {getProjects, getLocalStorage, editLocalStorage, removeFromLocalStorage, displayAlert}
+  export {getProjects, getLocalStorage, editLocalStorage, removeFromLocalStorage, displayAlert, selectEl}
+
+

@@ -10,7 +10,7 @@ const submitBtn = document.querySelector(".submit-btn");
 const container = document.querySelector(".todo-container");
 const list = document.querySelector(".todo-list");
 const clearBtn = document.querySelector(".clear-btn");
-const selectEl = document.getElementById("project-select");
+// const selectEl = document.getElementById("project-select");
 const date = document.getElementById("due");
 
 const checkBoxEl = document.getElementById("completed");
@@ -31,19 +31,6 @@ checkBoxEl.addEventListener("change", completedOrNot);
 // ****** FUNCTIONS **********
 
 
-  // const element = document.createElement("article");
-  // element.classList.add("project-item");
-  // const attr = document.createAttribute("data-projId");
-  // attr.value = projId;
-  // element.setAttributeNode(attr);
-  // element.innerHTML = `<p class="title">${projectVal}</p><p class="title">${nameVal}</p><p class="title">${dueVal}</p> <div class = "btn-container"> <button type = "button" class = "edit-btn"> <i class="fas fa-edit"></i> </button> <button type="button" class="delete-btn"> <i class="fas fa-trash">  </div>`;
-  //   const deleteBtn = element.querySelector(".delete-btn");
-  //   const editBtn = element.querySelector(".edit-btn");
-  //   deleteBtn.addEventListener("click", deleteProjItem);
-  //   editBtn.addEventListener("click", editProjItem);
-  //   // append child
-  //   projList.appendChild(element);
-}
 
 function completedOrNot(e) {
   isComplete = e.target.checked;
@@ -177,9 +164,10 @@ function buildSelect() {
       var option = document.createElement("option");
       option.value = item.projId;
       option.text = item.nameVal;
-      selectEl.appendChild(option);
+      Common.selectEl.appendChild(option);
     });
 }
+
 // window.addEventListener('DOMContentLoaded', setupItems);
 function setupItems() {
   let items = Common.getLocalStorage("list");

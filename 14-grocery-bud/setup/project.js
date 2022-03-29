@@ -39,6 +39,14 @@ function isNameTaken(name) {
   // not for each
   //return true if taken , false otherses
 }
+
+function addOption(id, projectName) {
+  var option = document.createElement("option");
+      option.value = id;
+      option.text = projectName;
+      Common.selectEl.appendChild(option);
+}
+
 function addProject(e) {
   e.preventDefault();
 
@@ -57,7 +65,8 @@ function addProject(e) {
   
   }
 
-
+  addOption(projId,projectVal );
+  
   if (dueVal && nameVal && projectVal && !editProjFlag) {
     createListItem(projId, nameVal, dueVal, projectVal);
 
