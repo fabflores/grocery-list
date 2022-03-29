@@ -17,7 +17,12 @@ let editProjID = "";
 
 projForm.addEventListener("submit", addProject);
 clearBtn.addEventListener("click", clearProjects);
-
+function isNameTaken(name) {
+  ///loop project and compare name
+  // use for (let i=i;i<items.lenght;i++) to loo
+  // not for each
+  //return true if taken , false otherses
+}
 function addProject(e) {
   e.preventDefault();
 
@@ -27,6 +32,10 @@ function addProject(e) {
 
   const projId = new Date().getTime().toString();
 
+  //new  assignment PAF
+  // dont let name if reusue
+  // if (isNameTaken (name)) {
+  // .  show alert 'name take and return from function
   if (dueVal && nameVal && projectVal && !editProjFlag) {
     createListItem(projId, nameVal, dueVal, projectVal);
 
@@ -40,6 +49,7 @@ function addProject(e) {
   } else if (dueVal && nameVal && projectVal && editProjFlag) {
     editProjElement.innerHTML = projectVal;
     editDateElement.innerHTML = dueVal;
+    // PAF: editdateElement not found.. i think is not the right one
     editCheckElement.innerHTML = nameVal;
 
     cdisplayAlert("value changed", "success");
@@ -73,7 +83,6 @@ function clearProjects() {
 // }
 
 function deleteProjItem(e) {
-
   const element = e.currentTarget.parentElement.parentElement;
   const projId = element.dataset.projId;
   projList.removeChild(element);
@@ -87,7 +96,6 @@ function deleteProjItem(e) {
 }
 
 function editProjItem(e) {
- 
   const element = e.currentTarget.parentElement.parentElement;
   // set edit item
   editProjElement = e.currentTarget.parentElement.parentElement;
@@ -114,7 +122,6 @@ function setBackToProjDefault() {
 
 // ****** LOCAL STORAGE **********
 function addToLocalStorage(projId, dueVal, projectVal, nameVal) {
-  
   const project = { projId, dueVal, projectVal, nameVal };
   let items = Common.getLocalStorage("project");
   items.push(project);
@@ -127,7 +134,7 @@ function addToLocalStorage(projId, dueVal, projectVal, nameVal) {
 //     : [];
 // }
 // function removeFromLocalStorage(projId) {
-//   
+//
 
 //   let items = Common.getLocalStorage("project");
 
@@ -147,17 +154,20 @@ function addToLocalStorage(projId, dueVal, projectVal, nameVal) {
 //     }
 //     return item;
 //   });
-//   localStorage.setItem("project", JSON.stringify(items));
+//   localStoragex.setItem("project", JSON.stringify(items));
 // }
 // // ****** SETUP ITEMS **********
 
 // window.addEventListener('DOMContentLoaded', setupProjItems);
 
 function setupProjItems() {
+  debugger;
   let items = Common.getLocalStorage("project");
   if (items.length > 0) {
     items.forEach(function (item) {
       createListItem(item.projId, item.value);
+      // PAF: why is undefined when first start.
+      // look how the paramenters of the function and what is passed
     });
     projContainer.classList.add("show-container");
   }

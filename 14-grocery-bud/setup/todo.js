@@ -1,5 +1,5 @@
-//*import 
-import * as Common from './common.js';
+//*import
+import * as Common from "./common.js";
 
 // ****** SELECT ITEMS **********
 
@@ -10,7 +10,7 @@ const submitBtn = document.querySelector(".submit-btn");
 const container = document.querySelector(".todo-container");
 const list = document.querySelector(".todo-list");
 const clearBtn = document.querySelector(".clear-btn");
-
+const selectEl = document.getElementById("project-select");
 const date = document.getElementById("due");
 
 const checkBoxEl = document.getElementById("completed");
@@ -29,23 +29,33 @@ clearBtn.addEventListener("click", clearItems);
 checkBoxEl.addEventListener("change", completedOrNot);
 
 // ****** FUNCTIONS **********
-function getProjects()
-{
-  const element = document.createElement("article");
-  element.classList.add("project-item");
-  const attr = document.createAttribute("data-projId");
-  attr.value = projId;
-  element.setAttributeNode(attr);
+function getProjects() {
+  let items = Common.getLocalStorage("project");
+  //pAF: first we need to get items from local storage
+  // then loop to create
+  if (items.length > 0) {
+    items.forEach(function (item) {
+      debugger;
+      var option = document.createElement("option");
+      option.value = item.projId;
+      option.text = item.nameVal;
+      selectEl.appendChild(option);
+    });
+  }
+
+  // const element = document.createElement("article");
+  // element.classList.add("project-item");
+  // const attr = document.createAttribute("data-projId");
+  // attr.value = projId;
+  // element.setAttributeNode(attr);
   // element.innerHTML = `<p class="title">${projectVal}</p><p class="title">${nameVal}</p><p class="title">${dueVal}</p> <div class = "btn-container"> <button type = "button" class = "edit-btn"> <i class="fas fa-edit"></i> </button> <button type="button" class="delete-btn"> <i class="fas fa-trash">  </div>`;
-//   const deleteBtn = element.querySelector(".delete-btn");
-//   const editBtn = element.querySelector(".edit-btn");
-//   deleteBtn.addEventListener("click", deleteProjItem);
-//   editBtn.addEventListener("click", editProjItem);
-//   // append child
-//   projList.appendChild(element);
+  //   const deleteBtn = element.querySelector(".delete-btn");
+  //   const editBtn = element.querySelector(".edit-btn");
+  //   deleteBtn.addEventListener("click", deleteProjItem);
+  //   editBtn.addEventListener("click", editProjItem);
+  //   // append child
+  //   projList.appendChild(element);
 }
-
-
 
 function completedOrNot(e) {
   isComplete = e.target.checked;
@@ -101,7 +111,7 @@ function addTodo(e) {
 
 //clear items clears all the to do items
 function clearItems() {
-  debugger
+  debugger;
   const items = document.querySelectorAll(".todo-item");
   if (items.length > 0) {
     items.forEach(function (list) {
@@ -180,6 +190,7 @@ function setupItems() {
     });
     container.classList.add("show-container");
   }
+  getProjects();
 }
 
 function createListItem(id, todoVal, todoDate, todoCheck) {
