@@ -17,9 +17,12 @@ const checkBoxEl = document.getElementById("completed");
 
 // edit option
 let editElement;
+let editDateElement;
+let editCheckElement;
 let editFlag = false;
 let editID = "";
 let isComplete;
+let todoCheck;
 
 // ****** EVENT LISTENERS **********
 // when these event listener buttons are clicked (submit, clear, checkbox)
@@ -30,21 +33,8 @@ checkBoxEl.addEventListener("change", completedOrNot);
 
 // ****** FUNCTIONS **********
 
-// const element = document.createElement("article");
-// element.classList.add("project-item");
-// const attr = document.createAttribute("data-projId");
-// attr.value = projId;
-// element.setAttributeNode(attr);
-// element.innerHTML = `<p class="title">${projectVal}</p><p class="title">${nameVal}</p><p class="title">${dueVal}</p> <div class = "btn-container"> <button type = "button" class = "edit-btn"> <i class="fas fa-edit"></i> </button> <button type="button" class="delete-btn"> <i class="fas fa-trash">  </div>`;
-//   const deleteBtn = element.querySelector(".delete-btn");
-//   const editBtn = element.querySelector(".edit-btn");
-//   deleteBtn.addEventListener("click", deleteProjItem);
-//   editBtn.addEventListener("click", editProjItem);
-//   // append child
-//   projList.appendChild(element);
-
-function completedOrNot(e) {
-  isComplete = e.target.checked;
+ function completedOrNot(e) {
+   todoCheck = e.target.checked;
 }
 
 // addTodo function creates new list item
@@ -52,20 +42,20 @@ function addTodo(e) {
   e.preventDefault();
   const todoDate = due.value;
   const todoVal = todo.value;
-  // const todoCheck= checkBox.checked;
+  // const todoCheck= checkBoxEl.checked;
   const id = new Date().getTime().toString();
 
   // if todoValue and todoDate are not blank, create the list item
 
   if (todoVal && todoDate && !editFlag) {
-    createListItem(id, todoVal, todoDate, isComplete);
+    createListItem(id, todoVal, todoDate, todoCheck);
 
     //display alert
     Common.displayAlert("item added to the list", "success");
     //show container
     container.classList.add("show-container");
     //add to local storage
-    addToLocalStorage(id, todoVal, todoDate, isComplete);
+    addToLocalStorage(id, todoVal, todoDate, todoCheck);
     //set back to default
     setBackToDefault();
   } else if (todoVal && todoDate && editFlag) {
@@ -75,12 +65,13 @@ function addTodo(e) {
 
     Common.displayAlert("value changed", "success");
     //edit local storage
-    addToLocalStorage(id, todoVal, todoDate, isComplete);
+    addToLocalStorage(id, todoVal, todoDate, todoCheck);
     setBackToDefault();
   } else {
     Common.displayAlert("please enter value", "danger");
   }
 }
+
 
 //display alert
 
@@ -97,11 +88,11 @@ function addTodo(e) {
 
 //clear items clears all the to do items
 function clearItems() {
-  debugger;
   const items = document.querySelectorAll(".todo-item");
   if (items.length > 0) {
-    items.forEach(function (list) {
-      list.removeChild(list);
+    items.forEach(function (item) {
+      list.removeChild(item);
+     
     });
   }
   container.classList.remove("show-container");
@@ -157,6 +148,8 @@ function setBackToDefault() {
   submitBtn.textContent = "submit";
 }
 
+
+
 // ****** LOCAL STORAGE **********
 function addToLocalStorage(id, todoVal, todoDate, todoCheck) {
   const todo = { id, todoVal, todoDate, todoCheck };
@@ -174,7 +167,7 @@ function buildSelect() {
     items.forEach(function (item) {
       var option = document.createElement("option");
       option.value = item.projId;
-      option.text = item.nameVal;
+      option.text = item.projectVal;
       Common.selectEl.appendChild(option);
     });
   }
@@ -185,16 +178,18 @@ function setupItems() {
   let items = Common.getLocalStorage("list");
   if (items.length > 0) {
     items.forEach(function (item) {
-      createListItem(item.id, item.value);
+      createListItem(item.id, item.todoVal, item.todoDate, item.isComplete);
+
     });
     container.classList.add("show-container");
   }
   buildSelect();
 }
 
-function createListItem(id, todoVal, todoDate, todoCheck) {
+function createListItem(id, todoVal, todoDate, isComplete) {
+  
   const element = document.createElement("article");
-
+  const checkVal = isComplete ? 'checked' : '';
   // add class
   element.classList.add("todo-item");
 
@@ -203,7 +198,7 @@ function createListItem(id, todoVal, todoDate, todoCheck) {
   attr.value = id;
   element.setAttributeNode(attr);
 
-  element.innerHTML = `<input disabled type = "checkbox" id="completed"/> <p class="title">${todoVal}</p> <p class="title">${todoDate}</p> <div class = "btn-container"> <button type = "button" class = "edit-btn"> <i class="fas fa-edit"></i> </button> <button type="button" class="delete-btn"> <i class="fas fa-trash">  </div>`;
+  element.innerHTML = `<input disabled ${checkVal} type = "checkbox" id="completed"/> <p class="title">${todoVal}</p> <p class="title">${todoDate}</p> <div class = "btn-container"> <button type = "button" class = "edit-btn"> <i class="fas fa-edit"></i> </button> <button type="button" class="delete-btn"> <i class="fas fa-trash">  </div>`;
 
   const deleteBtn = element.querySelector(".delete-btn");
   const editBtn = element.querySelector(".edit-btn");
@@ -216,3 +211,4 @@ function createListItem(id, todoVal, todoDate, todoCheck) {
 }
 
 export { setupItems };
+export {clearItems};

@@ -43,7 +43,9 @@
         <div class="form-control">
           <input type ="text" id="todo" placeholder="add a to do item"/>
           <input type = "date" id ="due"/>
-          <input type = "checkbox" id="completed" onclick="completedOrNot"/>
+          <input type = "checkbox" id="completed" />
+<!-- onclick="completedOrNot" -->
+
           <select name="projects" id="project-select">
             <option value = "">- please select a project - </option>
             <!-- <option value="project 1">project 1</option>
@@ -66,6 +68,9 @@
         <!-- <input type = "checkbox" class="completed" placeholder ="check when completed"/> -->
 
       </div>
+     
+      <button type = "button" id = "clear" onclick="clearAll();" class="clear-all-btn">CLEAR ALL</button>
+    
     </section>
     <!-- javascript -->
     <script type = "module"  src="./common.js"></script>

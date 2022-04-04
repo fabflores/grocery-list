@@ -195,7 +195,6 @@ function addToLocalStorage(projId, dueVal, projectVal, nameVal) {
 function setupProjItems() {
  
   let items = Common.getProjects();
-  debugger;
   if (items.length > 0) {
     items.forEach(function (item) {
       createListItem(item.projId, item.nameVal, item.dueVal, item.projectVal);
@@ -206,7 +205,7 @@ function setupProjItems() {
   }
 }
 
-function createListItem(projId, dueVal, nameVal, projectVal) {
+function createListItem(projId, nameVal, dueVal, projectVal) {
   const element = document.createElement("article");
 
   element.classList.add("project-item");
@@ -228,3 +227,4 @@ function createListItem(projId, dueVal, nameVal, projectVal) {
 }
 
 export { setupProjItems };
+export {clearProjects};

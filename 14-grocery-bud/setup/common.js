@@ -1,4 +1,31 @@
  const selectEl = document.getElementById("project-select");
+ const clearAll = document.querySelector(".clear-all-btn");
+
+//  function clearAll(){
+//   const items = document.querySelectorAll(".todo-item");
+//   if (items.length > 0) {
+//     items.forEach(function (item) {
+//       list.removeChild(item);
+     
+//     });
+//   }
+//   container.classList.remove("show-container");
+//   Common.displayAlert("empty list", "danger");
+//   setBackToDefault();
+//   localStorage.removeItem("list");
+//  }
+ 
+//  const items = document.querySelectorAll(".project-item");
+//  if (items.length > 0) {
+//    items.forEach(function (project) {
+//      projList.removeChild(project);
+//    });
+//  projContainer.classList.remove("show-container");
+//  Common.displayAlert("empty list", "danger");
+//  setBackToProjDefault();
+//  localStorage.removeItem("project");
+// }
+
 
 function getLocalStorage(storageKey) {
     return localStorage.getItem(storageKey)
@@ -54,6 +81,7 @@ function getProjects() {
   return items;
  
   }
+
 
   export {getProjects, getLocalStorage, editLocalStorage, removeFromLocalStorage, displayAlert, selectEl}
 
