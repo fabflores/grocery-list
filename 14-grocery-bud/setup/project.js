@@ -12,6 +12,8 @@ const projDate = document.getElementById("projectDue");
 const clearBtn = document.querySelector(".clear-button");
 
 let editProjElement;
+let editDateElement;
+let editNameElement;
 let editProjFlag = false;
 let editProjID = "";
 
@@ -81,8 +83,9 @@ function addProject(e) {
   } else if (dueVal && nameVal && projectVal && editProjFlag) {
     editProjElement.innerHTML = projectVal;
     editDateElement.innerHTML = dueVal;
+    editNameElement.innerHTML = nameVal;
     // PAF: editdateElement not found.. i think is not the right one
-    editCheckElement.innerHTML = nameVal;
+    
 
     cdisplayAlert("value changed", "success");
 
@@ -129,12 +132,18 @@ function deleteProjItem(e) {
 
 function editProjItem(e) {
   const element = e.currentTarget.parentElement.parentElement;
-  // set edit item
-  editProjElement = e.currentTarget.parentElement.parentElement;
+  // // set edit item
+  // editProjElement = e.currentTarget.parentElement.parentElement;
+  editProjElement = e.currentTarget.parentElement.previousElementSibling.previousElementSibling.previousElementSibling;
+  editNameElement = e.currentTarget.parentElement.previousElementSibling.previousElementSibling;
+  editDateElement = e.currentTarget.parentElement.previousElementSibling;
+
+ 
 
   project.value = editProjElement.innerHTML;
-  projectDue.value = editDateElement.innerHTML;
-  contributor.value = editCheckElement.innerHTML;
+  name.value=editNameElement.innerHTML;
+  projDate.value = editDateElement.innerHTML;
+  // contributor.value = editCheckElement.innerHTML;
 
   editProjFlag = true;
   editProjID = element.dataset.projId;
